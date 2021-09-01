@@ -8,7 +8,10 @@ const Navbar = () => {
   return (
     <Box
       align="center"
-      h="6vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      h={{ base: "10vh", sm: "8vh", md: "6vh", lg: "6vh" }}
       w={{ base: "80vw", sm: "60vw", md: "50vw", lg: "33vw" }}
       boxShadow="lg"
       border="1px"
