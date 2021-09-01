@@ -63,7 +63,10 @@ const BuyOption = ({
 
           <ModalFooter>
             <Button
-              onClick={() => handleConfirm(pointer, price * amount)}
+              onClick={() => {
+                handleConfirm(pointer, price * amount);
+                onClose();
+              }}
               colorScheme="teal"
               mr={3}
             >

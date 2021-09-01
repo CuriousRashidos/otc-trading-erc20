@@ -215,42 +215,6 @@
         "ERC20PutOption"
       ]
     },
-    "C:\\Users\\vergi\\Desktop\\Solidity\\otc-trading-erc20-options\\otc-trading\\contracts\\Greeter.sol": {
-      "lastModificationDate": 1630300637243,
-      "contentHash": "54c28c84e5277b35b8c8329ce9755dae",
-      "sourceName": "contracts/Greeter.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Greeter"
-      ]
-    },
     "C:\\Users\\vergi\\Desktop\\Solidity\\otc-trading-erc20-options\\otc-trading\\node_modules\\hardhat\\console.sol": {
       "lastModificationDate": 1630300637231,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
@@ -353,6 +317,42 @@
       ],
       "artifacts": [
         "OTCOptions"
+      ]
+    },
+    "C:\\Users\\vergi\\Desktop\\Solidity\\otc-trading-erc20-options\\otc-trading\\contracts\\Greeter.sol": {
+      "lastModificationDate": 1630300637243,
+      "contentHash": "54c28c84e5277b35b8c8329ce9755dae",
+      "sourceName": "contracts/Greeter.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Greeter"
       ]
     }
   }

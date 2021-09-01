@@ -4,9 +4,9 @@ import ERC20PutOption from "../artifacts/contracts/ERC20PutOption.sol/ERC20PutOp
 import OTCOptions from "../artifacts/contracts/OTCOptions.sol/OTCOptions.json";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
-const OTCOptionsAddr = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-const ERC20CallOptionAddr = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
-const ERC20PutOptionAddr = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+var OTCOptionsAddr = "0x563f993Cf794EA4285c6E07b40F2f98027363233";
+var ERC20CallOptionAddr = "0x632333c1975f6EAEBa549FFf07C4Ab73673282C9";
+var ERC20PutOptionAddr = "0x083e9C1F606084aE2B8F487324BE0d831208b939";
 
 //in real life scenario, we would expect to store (optionAddress => user) to fetch all addresses a user owns but here are hardcoding it for scope of assignment
 
@@ -68,10 +68,13 @@ const useEthers = () => {
       }
     },
     createOTC: async (address, price, amount) => {
-      const erc20Option = new ethers.Contract(address, ERC20OptionAbi, signer);
-      await erc20Option.approve(OTCOptionsAddr, amount);
-
       try {
+        const erc20Option = new ethers.Contract(
+          address,
+          ERC20OptionAbi,
+          signer
+        );
+        await erc20Option.approve(OTCOptionsAddr, amount);
         const tx = await OTCOptionsContract.useContract.create(
           address,
           price,
@@ -96,15 +99,7 @@ const useEthers = () => {
           );
         }
       } catch (err) {
-        toast({
-          position: "bottom",
-          duration: 4000,
-          render: () => (
-            <Box color="white" p={3} bg="teal">
-              <Text>{`Tx Fail: ${err.data.message}`}</Text>
-            </Box>
-          ),
-        });
+        console.log(err);
       }
     },
     //error.data.message
