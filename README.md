@@ -5,8 +5,11 @@ A simple P2P ERC20 options trading Dapp where users can mint themselves ERC20 op
 Notice: The app does not support any other ERC20 options apart from its own hardcoded ones for **now**.
 
 **Deployed version** 
-Testnet : Rinkeby
-URL: https://xenodochial-dubinsky-b910ec.netlify.app/
+**Testnet**
+Rinkeby
+
+**Link** 
+https://xenodochial-dubinsky-b910ec.netlify.app/
 
 **Load project in local in environment**
 
