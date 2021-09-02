@@ -5,9 +5,9 @@ import OTCOptions from "../artifacts/contracts/OTCOptions.sol/OTCOptions.json";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
 //contract addresses
-var OTCOptionsAddr = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-var ERC20CallOptionAddr = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
-var ERC20PutOptionAddr = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+var OTCOptionsAddr = "0xe6Daa3716c517550E6086d7D4c73b87578378142";
+var ERC20CallOptionAddr = "0x5Df1fd4A94651caAfE7634F3575E1592b596bbc1";
+var ERC20PutOptionAddr = "0x9eE55265a857A73F295AEcA471FA3affCF070fF6";
 
 //in real life scenario, we would expect to store (optionAddress => user) to fetch all addresses a user owns but here are hardcoding it for scope of assignment
 
