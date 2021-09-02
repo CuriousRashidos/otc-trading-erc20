@@ -75,7 +75,9 @@ const useEthers = () => {
           ERC20OptionAbi,
           signer
         );
-        await erc20Option.approve(OTCOptionsAddr, amount);
+        const approveTx = await erc20Option.approve(OTCOptionsAddr, amount);
+        await approveTx.wait();
+        
         const tx = await OTCOptionsContract.useContract.create(
           address,
           price,
