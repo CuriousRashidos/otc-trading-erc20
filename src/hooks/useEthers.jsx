@@ -4,9 +4,10 @@ import ERC20PutOption from "../artifacts/contracts/ERC20PutOption.sol/ERC20PutOp
 import OTCOptions from "../artifacts/contracts/OTCOptions.sol/OTCOptions.json";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
-var OTCOptionsAddr = "0x563f993Cf794EA4285c6E07b40F2f98027363233";
-var ERC20CallOptionAddr = "0x632333c1975f6EAEBa549FFf07C4Ab73673282C9";
-var ERC20PutOptionAddr = "0x083e9C1F606084aE2B8F487324BE0d831208b939";
+//contract addresses
+var OTCOptionsAddr = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+var ERC20CallOptionAddr = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+var ERC20PutOptionAddr = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
 
 //in real life scenario, we would expect to store (optionAddress => user) to fetch all addresses a user owns but here are hardcoding it for scope of assignment
 
@@ -28,9 +29,9 @@ const ERC20OptionAbi = [
   "function approve(address spender, uint256 amount) external returns (bool)",
 ];
 
+//use ehters hook component
 const useEthers = () => {
   const toast = useToast();
-
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const OTCOptionsContract = {

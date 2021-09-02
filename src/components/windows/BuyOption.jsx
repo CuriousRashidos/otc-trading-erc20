@@ -31,7 +31,7 @@ const BuyOption = ({
         alignItems="center"
       >
         <Text fontSize="0.9rem" mr="1rem">
-          {name} X {amount} for {price} ETH
+          {name} X {amount} for {price} WEI
         </Text>
 
         <Button px="2rem" colorScheme="teal" onClick={onOpen}>
