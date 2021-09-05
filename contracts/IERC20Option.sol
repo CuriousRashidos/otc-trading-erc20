@@ -47,7 +47,10 @@ interface IERC20Option {
      * Emits a {Transfer} event.
      */
     function transfer(address recipient, uint256 amount) external returns (bool);
-
+    function faucet() external;
+    function getDetails() external view returns (uint[4] memory);
+    function name() external view returns (string memory);
+    function allowance(address owner, address spender) external view  returns (uint256);
 
 }
 

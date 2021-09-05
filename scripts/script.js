@@ -13,7 +13,7 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  // We get the contract to deploy
+  // // We get the contract to deploy
   const OTCOptions = await hre.ethers.getContractFactory("OTCOptions");
   const ERC20CallOption = await hre.ethers.getContractFactory(
     "ERC20CallOption"
@@ -27,6 +27,13 @@ async function main() {
   await otcOptions.deployed();
   await erc20CallOption.deployed();
   await erc20PutOption.deployed();
+
+  const Test = await hre.ethers.getContractFactory("Test");
+  const test = await Test.deploy();
+
+  await test.deployed();
+
+  console.log("deployed test to ", test.address);
 
   console.log("OTC Options trading deployed to:", otcOptions.address);
   console.log("ERC20 Call Option deployed to:", erc20CallOption.address);

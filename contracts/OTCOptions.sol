@@ -33,6 +33,7 @@ contract OTCOptions  {
         address seller;
         uint price;
         uint amount;
+        uint pointer;
     }
     
     //@dev storing counters mapping a unique id to datastructure
@@ -68,6 +69,7 @@ contract OTCOptions  {
     */
     
     function buy(uint _pointer) external payable {
+        require(_pointer <= numOfOptions, "invalid pointer");
         
         OTCOption memory option = options[_pointer];
         
@@ -96,7 +98,7 @@ contract OTCOptions  {
         //user must first approve from UI
         ERC20Option.transferFrom(msg.sender, address(this), _intArgs[3]);
         
-        options[_intArgs[4]] = OTCOption(true, address(uint160(_intArgs[0])), address(uint160(_intArgs[1])), _intArgs[2], _intArgs[3]);
+        options[_intArgs[4]] = OTCOption(true, address(uint160(_intArgs[0])), address(uint160(_intArgs[1])), _intArgs[2], _intArgs[3], _intArgs[4]);
         
         return true;
     }

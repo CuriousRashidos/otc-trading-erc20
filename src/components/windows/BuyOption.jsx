@@ -1,5 +1,5 @@
 import { Box, useDisclosure, Button, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -9,18 +9,12 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-
-const BuyOption = ({
-  address,
-  name,
-  amount,
-  price,
-  seller,
-  handleConfirm,
-  pointer,
-}) => {
+import { ContractContext } from "../../hooks/useContract";
+const BuyOption = ({ address, name, amount, price, seller, pointer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const {
+    otcContract: { buyOption },
+  } = useContext(ContractContext);
   return (
     <Box>
       <Box
@@ -30,11 +24,7 @@ const BuyOption = ({
         justifyContent="center"
         alignItems="center"
       >
-        <Text fontSize="0.9rem" mr="1rem">
-          {name} X {amount} for {price} WEI
-        </Text>
-
-        <Button px="2rem" colorScheme="teal" onClick={onOpen}>
+        <Button px="2rem" colorScheme="blue" onClick={onOpen}>
           Buy
         </Button>
       </Box>
@@ -46,28 +36,28 @@ const BuyOption = ({
           <ModalCloseButton />
 
           <ModalBody>
-            <Text fontSize="0.9rem">Do you wish to buy:</Text>
-            <Text fontWeight="bolder" color="teal">
-              {name} x {amount}
+            <Text fontSize="0.9rem">Do you wish to buy </Text>
+            <Text fontWeight="bolder" color="blue.500">
+              {amount} of {name} for {price} (WEI)
             </Text>
 
             <Text fontSize="0.9rem">Address: </Text>
-            <Text fontWeight="bolder" color="teal">
+            <Text fontWeight="bolder" color="blue.500">
               {address}
             </Text>
             <Text fontSize="0.9rem">Seller: </Text>
-            <Text fontWeight="bolder" color="teal">
+            <Text fontWeight="bolder" color="blue.500">
               {seller}
             </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button
-              onClick={() => {
-                handleConfirm(pointer, price * amount);
+              onClick={async () => {
+                await buyOption(pointer);
                 onClose();
               }}
-              colorScheme="teal"
+              colorScheme="blue"
               mr={3}
             >
               Confirm

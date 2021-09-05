@@ -1,18 +1,15 @@
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 html {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .App {
-  background: rgb(51, 50, 74);
-  background: linear-gradient(
-    90deg,
-    rgba(51, 50, 74, 1) 0%,
-    rgba(3, 148, 112, 1) 48%,
-    rgba(60, 60, 60, 1) 100%
-  );
+  background: #292f33;
+
   height: 100vh;
+  overflow-y: visible;
+  overflow-x: hidden;
   width: 100vw;
 }
 

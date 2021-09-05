@@ -1,92 +1,93 @@
-import { Box, Button, Flex, Spacer, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import React, { useContext } from "react";
 import WindowLayout from "../windowLayout/WindowLayout";
 import { Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react";
-import useEthers from "../../hooks/useEthers";
+import { ContractContext } from "../../hooks/useContract";
 
 const MintWindow = () => {
-  const { ERC20CallContract, ERC20PutContract } = useEthers();
-
+  const {
+    optionsContract: { mint },
+  } = useContext(ContractContext);
   return (
     <WindowLayout>
-      <Flex direction="column" alignItems="center" justify="center">
+      <Flex direction="column" alignItems="center" justifyContent="center">
         <Text
-          bg="teal.600"
+          bg="#292F33"
           borderRadius="md"
           px="3rem"
           py="0.5rem"
           fontWeight="bolder"
-          mb="1.3rem"
+          fontSize={{
+            base: "1.3rem",
+            sm: "1.3rem",
+            md: "1.3rem",
+            lg: "1.6rem",
+            xl: "1.8rem",
+          }}
         >
-          MINT OPTIONS
+          BUY OPTIONS
         </Text>
         <Flex
+          alignItems="center"
+          justifyContent="center"
           mt="1.5rem"
-          w={{ base: "90%", sm: "80%", md: "70%", lg: "60%", xl: "60%" }}
+          w={{ base: "80vw", sm: "55vw", md: "38vw", lg: "30vw", xl: "25vw" }}
         >
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            bg="gray.900"
+            bg="#292F33"
             boxShadow="lg"
             height="13rem"
             w="11rem"
             borderRadius="1.2rem"
             border="1px"
-            borderColor="teal.900"
-            mr={{
-              base: "1rem",
-              sm: "0.5rem",
-              md: "0.5rem",
-            }}
           >
             <Stat textAlign="center">
               <StatLabel>
-                <Text fontSize="0.8rem">ETH-USDT</Text>
+                <Text fontSize="1.3rem">ETH-USDT</Text>
               </StatLabel>
               <StatNumber>
                 <Text fontSize="1.2rem">$2500 PUT</Text>
               </StatNumber>
               <StatHelpText>
-                <Text fontSize="0.7rem">Expires: DEC, SEP 2021</Text>
+                <Text fontSize="0.9rem">Expires: SEP 2021</Text>
               </StatHelpText>
               <Button
-                onClick={async () => await ERC20PutContract.mintUser()}
+                colorScheme="blue"
+                onClick={async () => await mint(process.env.REACT_APP_PUT)}
                 mt="1.3rem"
-                colorScheme="teal"
               >
                 Mint
               </Button>
             </Stat>
           </Box>
-          <Spacer />
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            bg="gray.900"
+            bg="#292F33"
             boxShadow="lg"
             height="13rem"
             w="11rem"
             borderRadius="1.2rem"
             border="1px"
-            borderColor="teal.900"
           >
             <Stat textAlign="center">
               <StatLabel>
-                <Text fontSize="0.8rem">ETH-USDT</Text>
+                <Text fontSize="1.3rem">ETH-USDT</Text>
               </StatLabel>
               <StatNumber>
                 <Text fontSize="1.2rem">$3500 CALL</Text>
               </StatNumber>
               <StatHelpText>
-                <Text fontSize="0.7rem">Expires: DEC, SEP 2021</Text>
+                <Text fontSize="0.9rem">Expires: SEP 2021</Text>
               </StatHelpText>
               <Button
-                onClick={async () => await ERC20CallContract.mintUser()}
+                onClick={async () => await mint(process.env.REACT_APP_CALL)}
                 mt="1.3rem"
-                colorScheme="teal"
+                colorScheme="blue"
               >
                 Mint
               </Button>

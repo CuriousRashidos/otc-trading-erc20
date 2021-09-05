@@ -6,6 +6,13 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract ERC20CallOption is ERC20{
     
     event Minted(address to, uint amount);
+      //@notice 0 == call, 1 == put
+    uint optionType = 0;
+    //@notice 1 = ETH-USDT in front end
+    uint asset = 1;
+    uint strike = 3500;
+    uint expiry = block.timestamp + 30 days;
+
     constructor() ERC20("ETH-USDT C3500 SEP2021", "OPX") {
         
     }
@@ -17,6 +24,10 @@ contract ERC20CallOption is ERC20{
     
      function decimals() public pure override returns (uint8) {
         return 0;
+    }
+   function getDetails() external view returns (uint, uint, uint, uint) {
+        return (optionType, asset, strike, expiry);
+        
     }
 
 }

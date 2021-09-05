@@ -1,49 +1,53 @@
 import "./App.css";
 import { Center, ChakraProvider, Text } from "@chakra-ui/react";
-import Navbar from "./components/Metamask/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import { NavContext } from "./Contexts/NavContext";
 import MainApp from "./components/MainApp";
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import WindowLayout from "./components/windowLayout/WindowLayout";
+import { ContractProvider } from "./hooks/useContract";
 
 function App() {
   const [loggedin, setLoggedin] = useState(false);
+
   useEffect(() => {
-    const checkMetamask = async () => {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const [account] = await provider.listAccounts();
-      if (account === undefined) {
-        let [user] = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        user && setLoggedin(true);
-      } else {
-        setLoggedin(true);
-      }
+    const requestAccount = async () => {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      accounts.length !== 0 && setLoggedin(true);
     };
-    checkMetamask();
+    requestAccount();
   }, []);
 
   return (
     <div className="App">
       <ChakraProvider>
-        <NavContext>
-          <Center display="flex" flexDirection="column">
-            {loggedin ? (
-              <>
-                <Navbar />
-                <MainApp />
-              </>
-            ) : (
-              <WindowLayout>
-                <Center>
-                  <Text>Please connect metamask</Text>
-                </Center>
-              </WindowLayout>
-            )}
-          </Center>
-        </NavContext>
+        <ContractProvider>
+          <NavContext>
+            <Center display="flex" flexDirection="column">
+              {loggedin ? (
+                <>
+                  <Navbar />
+                  <MainApp />
+                </>
+              ) : (
+                <WindowLayout>
+                  <Center>
+                    <Text
+                      fontWeight="bolder"
+                      fontSize="1.5rem"
+                      color="blue.500"
+                    >
+                      Please connect metamask
+                    </Text>
+                  </Center>
+                </WindowLayout>
+              )}
+            </Center>{" "}
+          </NavContext>
+          {/* <Test /> */}
+        </ContractProvider>
       </ChakraProvider>
     </div>
   );

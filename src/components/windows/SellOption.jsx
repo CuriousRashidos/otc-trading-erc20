@@ -16,11 +16,15 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ContractContext } from "../../hooks/useContract";
 
 const SellOption = ({ address, balance, name, handleConfirm }) => {
   const [price, setPrice] = useState(1);
   const [amount, setAmount] = useState(1);
+  const {
+    otcContract: { createSale, approveOptions },
+  } = useContext(ContractContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -32,8 +36,7 @@ const SellOption = ({ address, balance, name, handleConfirm }) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Text mr="1rem">{name}</Text>
-        <Button px="2rem" colorScheme="teal" onClick={onOpen}>
+        <Button px="2rem" colorScheme="blue" onClick={onOpen}>
           Sell
         </Button>
       </Box>
@@ -44,12 +47,24 @@ const SellOption = ({ address, balance, name, handleConfirm }) => {
           <ModalCloseButton />
 
           <ModalBody>
-            <Text fontSize="1rem">Selling option:</Text>
-            <Text fontWeight="bolder" color="teal" fontSize="1rem">
-              {address}
+            <Text fontSize="1rem" fontWeight="bolder">
+              Selling option:
+            </Text>
+            <Text fontWeight="bolder" color="blue.500" fontSize="1rem">
+              Address: {address.substring(0, 5)}
+              ...
+              {address.substring(35, 40)}
             </Text>
             <Text fontSize="1rem">
               {`Amount (you have ${balance} tokens):`}
+            </Text>
+            <Text
+              mb="0.4rem"
+              color="tomato"
+              fontWeight="bolder"
+              fontSize="0.8rem"
+            >
+              NOTICE: set amount and then approve first
             </Text>
             <NumberInput
               onChange={(valueString) => setAmount(parseInt(valueString))}
@@ -63,6 +78,7 @@ const SellOption = ({ address, balance, name, handleConfirm }) => {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
+
             <Text fontSize="1rem">Price (in Wei)</Text>
             <NumberInput
               onChange={(valueString) => setPrice(parseInt(valueString))}
@@ -77,19 +93,24 @@ const SellOption = ({ address, balance, name, handleConfirm }) => {
               </NumberInputStepper>
             </NumberInput>
           </ModalBody>
-
           <ModalFooter>
             <Button
-              onClick={() => {
-                handleConfirm(address, price, amount);
-                onClose();
-                setAmount(1);
-                setPrice(1);
-              }}
-              colorScheme="teal"
+              onClick={async () => await approveOptions(address, amount)}
+              colorScheme="green"
+              mr={3}
+              px="2rem"
+              py="0.3rem"
+            >
+              Approve
+            </Button>
+            <Button
+              onClick={async () => await createSale(address, price, amount)}
+              colorScheme="blue"
+              px="2rem"
+              py="0.3rem"
               mr={3}
             >
-              Confirm
+              Sell
             </Button>
           </ModalFooter>
         </ModalContent>

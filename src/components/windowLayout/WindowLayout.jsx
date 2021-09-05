@@ -5,11 +5,11 @@ const WindowLayout = ({ children }) => {
   return (
     <Box
       h="auto"
-      w={{ base: "90vw", sm: "80vw", md: "40vw", lg: "35vw" }}
+      w={{ base: "90vw", sm: "60vw", md: "50vw", lg: "35vw" }}
       borderRadius="2rem"
       boxShadow="lg"
       padding="1.3rem"
-      bg="gray.800"
+      bg="#FFFFFF"
       color="white"
       mt="2rem"
     >
