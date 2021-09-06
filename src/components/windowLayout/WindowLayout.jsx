@@ -4,7 +4,7 @@ import React from "react";
 const WindowLayout = ({ children }) => {
   return (
     <Box
-      h="auto"
+      minHeight="20rem"
       w={{ base: "90vw", sm: "60vw", md: "50vw", lg: "35vw" }}
       borderRadius="2rem"
       boxShadow="lg"

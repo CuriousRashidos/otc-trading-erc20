@@ -60,14 +60,11 @@ const SellWindow = () => {
                 color="blue.500"
                 size="xl"
               />
-              <Text ml="0.5rem" color="black" fontSize="0.8rem">
-                If it takes too long, then you probably don't have any options
-              </Text>
             </Center>
           ) : (
             userOptions.map(
               (option, index) =>
-                option.balance !== 0 && (
+                parseInt(option.balance) !== 0 && (
                   <Box
                     key={index}
                     display="flex"

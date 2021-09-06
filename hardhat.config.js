@@ -26,10 +26,8 @@ module.exports = {
       chainId: 1337,
     },
     rinkeby: {
-      url: "https://rinkeby.infura.io/v3/7061d6cf4d394c11876f9edbb899dec2",
-      accounts: [
-        `0x43d18cc77592594762c587ab7a2944ccd3658a582fd7283b6671e5c86c9bb6a4`,
-      ],
+      url: `https://rinkeby.infura.io/v3/${process.env.REACT_APP_INFURA_KEY.toString()}`,
+      accounts: [`0x${REACT_APP_PRIVATE_KEY.toString()}`],
     },
   },
 };

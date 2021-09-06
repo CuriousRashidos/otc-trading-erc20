@@ -16,9 +16,6 @@ import { ContractContext } from "../../hooks/useContract";
 
 const BuyWindow = () => {
   const { saleOptions, optionNames } = useContext(ContractContext);
-  console.log(saleOptions);
-  saleOptions.forEach((option, index) => console.log(optionNames[1]));
-  console.log(optionNames);
 
   return (
     <WindowLayout>
@@ -63,7 +60,8 @@ const BuyWindow = () => {
           ) : (
             saleOptions.map(
               (option, index) =>
-                option.active === true && (
+                option.active === true &&
+                parseInt(option.amount) !== 0 && (
                   <Box
                     key={index}
                     display="flex"

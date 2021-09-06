@@ -77,7 +77,7 @@ export const ContractProvider = ({ children }) => {
             otcContract.getSellingOptions();
 
             toast({
-              position: "bottom",
+              position: "bottom-left",
               duration: 4000,
 
               render: () => (
@@ -95,7 +95,7 @@ export const ContractProvider = ({ children }) => {
             parseInt(allowance)
           );
           toast({
-            position: "bottom",
+            position: "bottom-left",
             duration: 4000,
 
             render: () => (
@@ -126,7 +126,7 @@ export const ContractProvider = ({ children }) => {
           //@notice update options once tx is mined
           console.log("Approve success");
           toast({
-            position: "bottom",
+            position: "bottom-left",
             duration: 4000,
 
             render: () => (
@@ -162,15 +162,11 @@ export const ContractProvider = ({ children }) => {
       const filtered = optionsData.filter((option) => option.active !== false);
 
       //@notice calls for multicall to get option names
-      //"0x0000000000000000000000000000000000000000"
       const nameCalls = filtered.map(({ optionAddress }) => {
         const optionContract = new Contract(optionAddress, optionAbi);
         return optionContract.name();
       });
       const names = await ethcallProvider.all(nameCalls);
-      console.log(names);
-      console.log(filtered.length);
-      //filter in the front end
 
       //@notice setting state
       setOptionNames(names);
@@ -180,10 +176,8 @@ export const ContractProvider = ({ children }) => {
       const currentOption = saleOptions.filter(
         ({ pointer }) => parseInt(pointer) === _pointer
       );
-      console.log(currentOption);
       //destructuring from array then from object
       const [{ price, amount, address }] = currentOption;
-      console.log(price, amount);
       const total = parseInt(amount) * parseInt(price);
       console.log(
         "amount: ",
@@ -207,7 +201,7 @@ export const ContractProvider = ({ children }) => {
           otcContract.getSellingOptions();
           optionsContract.getOptions();
           toast({
-            position: "bottom",
+            position: "bottom-left",
             duration: 4000,
 
             render: () => (
@@ -249,7 +243,7 @@ export const ContractProvider = ({ children }) => {
           optionsContract.getOptions();
           console.log("updated tokens");
           toast({
-            position: "bottom",
+            position: "bottom-left",
             duration: 4000,
 
             render: () => (
@@ -302,14 +296,20 @@ export const ContractProvider = ({ children }) => {
       const balancesData = await ethcallProvider.all(balances);
 
       //@notice filter new state recieved from multicall
-      const newState = options.map((_, index) => ({
-        address: optionsAddresses[index],
-        balance: parseInt(balancesData[index]),
-        details: optionsData[index],
-      }));
+      const newState = optionsData.map(
+        (_, index) =>
+          parseInt(balancesData[index]) > 0 && {
+            address: optionsAddresses[index],
+
+            balance: parseInt(balancesData[index]),
+            details: optionsData[index],
+          }
+      );
+      newState !== userOptions
+        ? setUserOptions(newState)
+        : newState.length === 0 && setUserOptions([]);
 
       //@notice compare states to not replicate status
-      newState !== userOptions && setUserOptions(newState);
     },
     getName: async (address) => {
       const contract = optionsContract.readContract(address);

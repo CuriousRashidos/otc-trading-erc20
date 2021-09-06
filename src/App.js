@@ -29,6 +29,7 @@ function App() {
               {loggedin ? (
                 <>
                   <Navbar />
+
                   <MainApp />
                 </>
               ) : (
@@ -44,9 +45,8 @@ function App() {
                   </Center>
                 </WindowLayout>
               )}
-            </Center>{" "}
+            </Center>
           </NavContext>
-          {/* <Test /> */}
         </ContractProvider>
       </ChakraProvider>
     </div>
