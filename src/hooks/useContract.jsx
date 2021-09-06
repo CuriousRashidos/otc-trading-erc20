@@ -248,7 +248,10 @@ export const ContractProvider = ({ children }) => {
 
             render: () => (
               <Box color="white" p={3} bg="blue.500">
-                <Text>{`Success: 10 Options minted ${address}
+                <Text>{`Success: 10 Options minted ${address.substring(
+                  0,
+                  4
+                )} ... ${address.substring(36, 40)}
                 }`}</Text>
               </Box>
             ),
@@ -296,15 +299,20 @@ export const ContractProvider = ({ children }) => {
       const balancesData = await ethcallProvider.all(balances);
 
       //@notice filter new state recieved from multicall
-      const newState = optionsData.map(
-        (_, index) =>
-          parseInt(balancesData[index]) > 0 && {
-            address: optionsAddresses[index],
+      var newState = [];
+      optionsData.forEach((_, index) => {
+        if (parseInt(balancesData[index]) !== 0) {
+          newState = [
+            ...newState,
+            {
+              address: optionsAddresses[index],
+              balance: parseInt(balancesData[index]),
+              details: optionsData[index],
+            },
+          ];
+        }
+      });
 
-            balance: parseInt(balancesData[index]),
-            details: optionsData[index],
-          }
-      );
       newState !== userOptions
         ? setUserOptions(newState)
         : newState.length === 0 && setUserOptions([]);

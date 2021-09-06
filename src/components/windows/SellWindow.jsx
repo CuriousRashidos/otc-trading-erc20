@@ -9,7 +9,7 @@ import {
   StatNumber,
   Spinner,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WindowLayout from "../windowLayout/WindowLayout";
 
 import SellOption from "./SellOption";
@@ -17,6 +17,7 @@ import { ContractContext } from "../../hooks/useContract";
 
 const SellWindow = () => {
   const { userOptions } = useContext(ContractContext);
+  const [loadingMessage, setLoadingMessage] = useState("");
 
   const parseUnixToDate = (unix) => {
     const intUnix = parseInt(unix) * 1000;
@@ -25,6 +26,17 @@ const SellWindow = () => {
     const year = date.getUTCFullYear();
     return `${month.substring(0, 3).toUpperCase()}${year}`;
   };
+
+  useEffect(() => {
+    const load = setTimeout(() => {
+      if (userOptions.length === 0) {
+        setLoadingMessage(
+          "Taking long, either you don't have options or you can mint yourself"
+        );
+      }
+    }, 3000);
+    return () => clearTimeout(load);
+  }, [userOptions]);
 
   return (
     <WindowLayout>
@@ -52,7 +64,7 @@ const SellWindow = () => {
           w={{ base: "80vw", sm: "55vw", md: "38vw", lg: "30vw", xl: "25vw" }}
         >
           {userOptions.length === 0 ? (
-            <Center>
+            <Center display="flex" flexDirection="column">
               <Spinner
                 thickness="10px"
                 speed="0.65s"
@@ -60,59 +72,55 @@ const SellWindow = () => {
                 color="blue.500"
                 size="xl"
               />
+              <Text mt="1rem" color="black">
+                {loadingMessage}
+              </Text>
             </Center>
           ) : (
-            userOptions.map(
-              (option, index) =>
-                parseInt(option.balance) !== 0 && (
-                  <Box
-                    key={index}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bg="#292F33"
-                    boxShadow="lg"
-                    height="13rem"
-                    w="11rem"
-                    borderRadius="1.2rem"
-                    border="1px"
-                  >
-                    {/* return (optionType, asset, strike, expiry); */}
-                    <Stat textAlign="center">
-                      <StatLabel>
-                        <Text fontSize="1.1rem" mt="0.9rem">
-                          ETH-USDT
-                        </Text>
-                      </StatLabel>
-                      <StatNumber>
-                        <Text fontSize="1rem">
-                          ${parseInt(option.details[2])}
-                        </Text>
-                      </StatNumber>
-                      <StatHelpText>
-                        <Text p="0.5rem" fontSize="0.85rem">
-                          Expires: {parseUnixToDate(option.details[3])}
-                        </Text>
-                        <Text mt="0.3rem" fontSize="0.9rem">
-                          You have: {option.balance}
-                        </Text>
-                      </StatHelpText>
-                      {/* <Button mb="0.3rem" colorScheme="blue" mt="0.2rem">
+            userOptions.map((option, index) => (
+              <Box
+                key={index}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                bg="#292F33"
+                boxShadow="lg"
+                height="13rem"
+                w="11rem"
+                borderRadius="1.2rem"
+                border="1px"
+              >
+                {/* return (optionType, asset, strike, expiry); */}
+                <Stat textAlign="center">
+                  <StatLabel>
+                    <Text fontSize="1.1rem" mt="0.9rem">
+                      ETH-USDT
+                    </Text>
+                  </StatLabel>
+                  <StatNumber>
+                    <Text fontSize="1rem">${parseInt(option.details[2])}</Text>
+                  </StatNumber>
+                  <StatHelpText>
+                    <Text p="0.5rem" fontSize="0.85rem">
+                      Expires: {parseUnixToDate(option.details[3])}
+                    </Text>
+                    <Text mt="0.3rem" fontSize="0.9rem">
+                      You have: {option.balance}
+                    </Text>
+                  </StatHelpText>
+                  {/* <Button mb="0.3rem" colorScheme="blue" mt="0.2rem">
                   Sell
                 </Button> */}
-                      <SellOption
-                        address={option.address}
-                        balance={option.balance}
-                        name={`${
-                          parseInt(option.details[0]) === 1 ? "P" : "C"
-                        }${option.details[2]} ${parseUnixToDate(
-                          option.details[3]
-                        )}`}
-                      />
-                    </Stat>
-                  </Box>
-                )
-            )
+                  <SellOption
+                    address={option.address}
+                    balance={option.balance}
+                    name={`${parseInt(option.details[0]) === 1 ? "P" : "C"}${
+                      option.details[2]
+                    } ${parseUnixToDate(option.details[3])}`}
+                  />
+                </Stat>
+              </Box>
+            ))
           )}
         </Flex>
       </Flex>
